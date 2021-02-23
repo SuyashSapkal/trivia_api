@@ -247,6 +247,10 @@ def create_app(test_config=None):
     while found:
       if next_question.id in previous_questions:
         next_question = get_random_question()
+        if(len(previous_questions)==len(questions)):
+          return jsonify({
+            'success':True
+          })
       else:
         found = False
   
