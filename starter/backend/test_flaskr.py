@@ -66,7 +66,15 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['categories'])
         self.assertEqual(len(data['categories']), 6)
+    
+    def test_404_sent_requesting_non_existing_category(self):
+        res = self.client().get('/categories/9999')
+        data = json.loads(res.data)
 
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertEqual(data['message'], 'resource not found')
+    
     def test_get_paginated_questions(self):
         """Test for get all paginated questions
         This tests the return values for a successful
